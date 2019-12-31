@@ -9,8 +9,8 @@ namespace Bandymas.Controllers
 {
     public class DummyController:Controller
     {
-        private BooksInfoContext ctx;
-        public DummyController(BooksInfoContext _ctx)
+        private Entities.BooksInfoContext ctx;
+        public DummyController(Entities.BooksInfoContext _ctx)
         {
             ctx = _ctx;  
         }

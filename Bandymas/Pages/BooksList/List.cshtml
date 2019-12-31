@@ -1,5 +1,24 @@
 ﻿@page
 @model Bandymas.Pages.BooksList.ListModel
-@{
-}
+
+
 <h1>Books</h1>
+
+
+
+<table class="table">
+	<tr>
+		<th>Id</th>
+		<th>Book IBIN</th>
+		<th>Book title</th>
+	</tr>
+	@foreach (var book in Model.BooksOnScreen)
+	{
+		<tr>
+			<td>@book.Id</td>
+			<td>@book.IBIN</td>
+			<td>@book.Title</td>
+
+		</tr>
+	}
+</table>
