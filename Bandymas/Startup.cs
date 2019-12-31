@@ -42,6 +42,7 @@ namespace Bandymas
             }
 
             //app.UseStatusCodePages();
+            app.UseStaticFiles();
             app.UseMvc();
        
         }
