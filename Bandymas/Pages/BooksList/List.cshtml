@@ -4,20 +4,39 @@
 
 <h1>Books</h1>
 
+<form method="get">
+	<div class="form-group">
+		<div class="input-group">
+			<input type="search" class="form-control" placeholder="Input book title,ibin or type to search"
+				   asp-for="SearchedTerm" />
+			<span class="input-group-btn">
+				<button class="btn btn-default">
+					<i class="glyphicon glyphicon-search"></i>
+				</button>
+			</span>
+		</div>
+	</div>
 
+</form>
 
 <table class="table">
 	<tr>
-		<th>Id</th>
 		<th>Book IBIN</th>
 		<th>Book title</th>
+		<th>Book Type</th>
 	</tr>
 	@foreach (var book in Model.BooksOnScreen)
 	{
 		<tr>
-			<td>@book.Id</td>
 			<td>@book.IBIN</td>
 			<td>@book.Title</td>
+			<td>@book.Type</td>
+			<td>
+				<a class="btn btn-lg"
+				   asp-page="./Edit"
+				   asp-route-book.id="@book.Id">
+					<i class="glyphicon glyphicon-zoom-edit"></i>
+				</a>
 
 		</tr>
 	}

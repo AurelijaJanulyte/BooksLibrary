@@ -6,6 +6,7 @@ using Bandymas.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,7 +24,7 @@ namespace Bandymas
             {
                 o.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 o.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            });
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
 
             var connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=BooksInfoDB;Trusted_Connection=True;";
             services.AddDbContext<BooksInfoContext>(o => o.UseSqlServer(connectionString));

@@ -12,13 +12,26 @@ namespace Bandymas.Pages.BooksList
     {
         private BooksInfoContext _booksInfoContext;
         public IEnumerable<Books> BooksOnScreen { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public string SearchedTerm { get; set; }
         public ListModel(BooksInfoContext booksInfoContext)
         {
             _booksInfoContext = booksInfoContext;
         }
-        public void OnGet()
+        public void OnGet(string SearchedTerm)
         {
-            BooksOnScreen = _booksInfoContext.BooksList.ToList();
+            if (string.IsNullOrWhiteSpace(SearchedTerm))
+            {
+                BooksOnScreen = _booksInfoContext.BooksList.ToList();
+            }
+            else
+            {
+                BooksOnScreen = _booksInfoContext.BooksList
+                    .Where(b => b.IBIN.ToString().Contains(SearchedTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                           b.Title.Contains(SearchedTerm, StringComparison.InvariantCultureIgnoreCase) ||
+                           b.Type.ToString().Contains(SearchedTerm,StringComparison.InvariantCultureIgnoreCase))
+                    .ToList();
+            }
         }
     }
 }
