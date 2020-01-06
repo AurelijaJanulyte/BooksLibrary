@@ -33,11 +33,23 @@
 			<td>@book.Type</td>
 			<td>
 				<a class="btn btn-lg"
+				   asp-page="./Detail"
+				   asp-route-bookId="@book.Id">
+					<i class="glyphicon glyphicon-zoom-in"></i>
+				</a>
+				<a class="btn btn-lg"
 				   asp-page="./Edit"
-				   asp-route-book.id="@book.Id">
-					<i class="glyphicon glyphicon-zoom-edit"></i>
+				   asp-route-bookId="@book.Id">
+					<i class="glyphicon glyphicon-edit"></i>
+				</a>
+				<a class="btn btn-lg"
+				   asp-page="./Delete"
+				   asp-route-bookId="@book.Id">
+					<i class="glyphicon glyphicon-trash"></i>
 				</a>
 
-		</tr>
+</tr>
 	}
 </table>
+
+<a asp-page="./Edit" class="btn btn-primary">Add new book</a>

@@ -9,6 +9,15 @@ namespace Bandymas.Entities
 {
     public class AuthorInfo
     {
+        private AuthorInfo()
+        {
+
+        }
+        public AuthorInfo(string firstName, string lastName)
+        {
+            FirstName = FirstName;
+            LastName = lastName;
+        }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

@@ -13,8 +13,8 @@ namespace Bandymas.Entities
     {
         private Books()
         {
-
         }
+
         public Books(int ibin, string title, BookType type)
         {
             IBIN = ibin;
@@ -24,10 +24,14 @@ namespace Bandymas.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public int IBIN { get; set; }
+        [Required]
         public string Title { get; set; }
         public BookType Type { get; set; }
+        public int AuthorInfoId { get; set; }
+        public AuthorInfo AuthorInfo { get; set; }
     }
 
-    public enum BookType { Horror, Romance, Adventure }
+    public enum BookType { None,Horror, Romance, Adventure }
 }

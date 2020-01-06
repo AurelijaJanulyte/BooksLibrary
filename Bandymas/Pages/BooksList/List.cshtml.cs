@@ -12,6 +12,7 @@ namespace Bandymas.Pages.BooksList
     {
         private BooksInfoContext _booksInfoContext;
         public IEnumerable<Books> BooksOnScreen { get; set; }
+       
         [BindProperty(SupportsGet = true)]
         public string SearchedTerm { get; set; }
         public ListModel(BooksInfoContext booksInfoContext)

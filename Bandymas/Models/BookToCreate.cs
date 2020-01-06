@@ -8,6 +8,7 @@ namespace Bandymas.Entities
 {
     public class BookToCreate
     {
+        public int Id { get; set; }
         [Required]
         public int? IBIN { get; set; }
 

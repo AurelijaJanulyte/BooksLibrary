@@ -48,15 +48,15 @@ namespace Bandymas.Controllers
             else
                 return BadRequest(ModelState);
         }
-        [HttpPut("{ibin}")]
-        public IActionResult UpdateBook(int ibin, [FromBody] BookToUpdate correctedBook)
+        [HttpPut("{id}")]
+        public IActionResult UpdateBook(int id, [FromBody] BookToUpdate correctedBook)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var oldBook = _context.BooksList.SingleOrDefault(b => b.IBIN == ibin);
+            var oldBook = _context.BooksList.SingleOrDefault(b => b.Id == id);
 
             if (oldBook == null)
             {

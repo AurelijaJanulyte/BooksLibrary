@@ -1,0 +1,26 @@
+﻿@page "{bookId:int}"
+@model Bandymas.Pages.BooksList.DetailModel
+@{
+	ViewData["Title"] = "Detail";
+}
+
+<h2>@Model.Book.Title.</h2>
+<div>
+	Id: @Model.Book.Id
+</div>
+<div>
+	Title: @Model.Book.Title
+</div>
+<div>
+	Type: @Model.Book.Type
+</div>
+<div>
+	IBIN: @Model.Book.IBIN
+</div>
+
+@if (Model.Message != null)
+{
+	<div class="alert alert-info">@Model.Message</div>
+}
+
+<a asp-page="./List" class="btn btn-default">All books</a>
