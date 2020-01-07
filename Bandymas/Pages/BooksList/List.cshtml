@@ -21,13 +21,15 @@
 
 <table class="table">
 	<tr>
-		<th>Book IBIN</th>
-		<th>Book title</th>
-		<th>Book Type</th>
+		<th>Author</th>
+		<th>IBIN</th>
+		<th>Title</th>
+		<th>Type</th>
 	</tr>
 	@foreach (var book in Model.BooksOnScreen)
 	{
 		<tr>
+			<td>@book.AuthorInfo.FirstName + @book.AuthorInfo.LastName</td>
 			<td>@book.IBIN</td>
 			<td>@book.Title</td>
 			<td>@book.Type</td>

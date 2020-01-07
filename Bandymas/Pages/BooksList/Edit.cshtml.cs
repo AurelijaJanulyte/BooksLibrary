@@ -16,6 +16,7 @@ namespace Bandymas.Pages.BooksList
 
         [BindProperty]
         public BookToUpdate Book { get; set; }
+        [BindProperty]
         public Author Author { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
 
@@ -72,7 +73,7 @@ namespace Bandymas.Pages.BooksList
             {
                 var newBook = new Books(Book.IBIN.Value, Book.Title, Book.Type.Value);
                 newBook.AuthorInfoId = 1;
-                var newAuthor = new AuthorInfo(Author.FirstName = "Laura Sintija", Author.LastName = "Cerniauskiate");
+                
 
                 _infoContext.Add(newBook);
                 _infoContext.SaveChanges();
