@@ -24,7 +24,7 @@ namespace Bandymas.Pages.BooksList
         {
             if (string.IsNullOrWhiteSpace(SearchedTerm))
             {
-                BooksOnScreen = _booksInfoContext.BooksList.ToList();
+                BooksOnScreen = _booksInfoContext.BooksList.Include(a=>a.AuthorInfo).ToList();
             }
             else
             {

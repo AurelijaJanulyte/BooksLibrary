@@ -17,9 +17,8 @@ namespace Bandymas.Pages.BooksList
         [BindProperty]
         public BookToUpdate Book { get; set; }
         [BindProperty]
-        public Author Author { get; set; }
+        public IEnumerable<SelectListItem> Authors { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
-
         public EditModel(BooksInfoContext infoContext,
                          IHtmlHelper htmlHelper)
         {
@@ -31,10 +30,13 @@ namespace Bandymas.Pages.BooksList
 
         public IActionResult OnGet(int? bookId)
         {
+            Authors = _infoContext.AuthorsList.ToList()
+                   .Select(a => new SelectListItem { Value = a.Id.ToString(), Text = $"{a.FirstName} {a.LastName}" });
+
             if (bookId.HasValue)
             {
                 var book = _infoContext.BooksList.SingleOrDefault(b => b.Id == bookId.Value);
-                Book = new BookToUpdate { IBIN = book.IBIN, Title = book.Title, Type = book.Type };
+                Book = new BookToUpdate { IBIN = book.IBIN, Title = book.Title, Type = book.Type, AuthorId=book.AuthorInfoId};
             }
             else
             {
@@ -73,7 +75,7 @@ namespace Bandymas.Pages.BooksList
             {
                 var newBook = new Books(Book.IBIN.Value, Book.Title, Book.Type.Value);
                 newBook.AuthorInfoId = 1;
-                
+
 
                 _infoContext.Add(newBook);
                 _infoContext.SaveChanges();

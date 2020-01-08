@@ -7,7 +7,12 @@
 <h2>Editting @Model.Book.Title</h2>
 
 <form method="post">
-	@*<input type="hidden" asp-for="Book.Id" />*@
+	<div class="form-group">
+		<label asp-for="Book.AuthorId"></label>
+		<select class="form-control" asp-for="Book.AuthorId"
+				asp-items="Model.Authors"></select>
+		<span class="text-danger" asp-validation-for="Book.AuthorId"></span>
+	</div>
 	<div class="form-group">
 		<label asp-for="Book.Title"></label>
 		<input asp-for="Book.Title" class="form-control" />

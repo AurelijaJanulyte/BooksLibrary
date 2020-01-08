@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Bandymas.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bandymas.Pages.BooksList
 {
@@ -18,7 +19,7 @@ namespace Bandymas.Pages.BooksList
         }
         public IActionResult OnGet(int bookId)
         {
-            Book = _booksInfoContext.BooksList.Single(b => b.Id==bookId);
+            Book = _booksInfoContext.BooksList.Include(a=>a.AuthorInfo).Single(b => b.Id==bookId);
             if (Book == null) 
             {
                 return RedirectToPage("./NotFound");
@@ -28,7 +29,7 @@ namespace Bandymas.Pages.BooksList
 
         public IActionResult OnPost(int bookId) 
         {
-            var book = _booksInfoContext.BooksList.Single(b => b.Id == bookId);
+            var book = _booksInfoContext.BooksList.Include(a=>a.AuthorInfo).Single(b => b.Id == bookId);
 
             if (book != null)
             {
