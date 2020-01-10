@@ -19,7 +19,7 @@ namespace Bandymas.Pages.BooksList
         }
         public IActionResult OnGet(int bookId)
         {
-            Book = _booksInfoContext.BooksList.Include(a=>a.AuthorInfo).Single(b => b.Id==bookId);
+            Book = _booksInfoContext.BooksList.Single(b => b.Id==bookId);
             if (Book == null) 
             {
                 return RedirectToPage("./NotFound");
@@ -29,7 +29,7 @@ namespace Bandymas.Pages.BooksList
 
         public IActionResult OnPost(int bookId) 
         {
-            var book = _booksInfoContext.BooksList.Include(a=>a.AuthorInfo).Single(b => b.Id == bookId);
+            var book = _booksInfoContext.BooksList.Single(b => b.Id == bookId);
 
             if (book != null)
             {
@@ -40,7 +40,7 @@ namespace Bandymas.Pages.BooksList
             {
                 return RedirectToPage("./NotFound");
             }
-            TempData["Message"] = $"{Book.Title} deleted";
+            TempData["Message"] = $"{book.Title} deleted";
             return RedirectToPage("./List");
         }
     }

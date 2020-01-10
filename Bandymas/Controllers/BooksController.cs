@@ -1,5 +1,6 @@
 ﻿using Bandymas.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace Bandymas.Controllers
@@ -17,7 +18,7 @@ namespace Bandymas.Controllers
         [HttpGet()]
         public IActionResult GetBooks()
         {
-            var booksList = _context.BooksList.ToList();
+            var booksList = _context.BooksList.Include(a=>a.AuthorInfo).ToList();
             return Ok(booksList);
         }
 
@@ -41,7 +42,7 @@ namespace Bandymas.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.BooksList.Add(new Books(newBook.IBIN.Value, newBook.Title, newBook.Type.Value));
+                _context.BooksList.Add(new Books(newBook.IBIN.Value, newBook.Title, newBook.Type.Value,newBook.AuthorId));
                 _context.SaveChanges();
                 return Ok();
             }
@@ -66,6 +67,7 @@ namespace Bandymas.Controllers
             oldBook.Title = correctedBook.Title;
             oldBook.IBIN = correctedBook.IBIN.Value;
             oldBook.Type = correctedBook.Type.Value;
+            oldBook.AuthorInfoId = correctedBook.AuthorId;
             _context.SaveChanges();
             return Ok();
 

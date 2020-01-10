@@ -6,6 +6,7 @@ using Bandymas.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bandymas.Pages.BooksList
 {
@@ -62,10 +63,11 @@ namespace Bandymas.Pages.BooksList
 
             if (bookId.HasValue)
             {
-                var book = _infoContext.BooksList.Single(b => b.Id == bookId);
+                var book = _infoContext.BooksList.Include(a=>a.AuthorInfo).Single(b => b.Id == bookId);
                 book.IBIN = Book.IBIN.Value;
                 book.Title = Book.Title;
                 book.Type = Book.Type.Value;
+                book.AuthorInfoId = Book.AuthorId;
                 _infoContext.SaveChanges();
 
                 return RedirectToPage("./Detail", new { bookId });
@@ -73,10 +75,7 @@ namespace Bandymas.Pages.BooksList
             }
             else
             {
-                var newBook = new Books(Book.IBIN.Value, Book.Title, Book.Type.Value);
-                newBook.AuthorInfoId = 1;
-
-
+                var newBook = new Books(Book.IBIN.Value, Book.Title, Book.Type.Value,Book.AuthorId);
                 _infoContext.Add(newBook);
                 _infoContext.SaveChanges();
 

@@ -15,8 +15,9 @@ namespace Bandymas.Entities
         {
         }
 
-        public Books(int ibin, string title, BookType type)
+        public Books(int ibin, string title, BookType type,int authorId)
         {
+            AuthorInfoId = authorId;
             IBIN = ibin;
             Title = title;
             Type = type;
