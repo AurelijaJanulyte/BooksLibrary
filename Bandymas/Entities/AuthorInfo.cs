@@ -15,7 +15,7 @@ namespace Bandymas.Entities
         }
         public AuthorInfo(string firstName, string lastName)
         {
-            FirstName = FirstName;
+            FirstName = firstName;
             LastName = lastName;
         }
         [Key]
