@@ -5,28 +5,23 @@ using System.Threading.Tasks;
 using Bandymas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bandymas.Pages.BooksList
 {
-    public class DetailModel : PageModel
+    public class AuthorDetailsModel : PageModel
     {
         [TempData]
         public string Message { get; set; }
-
         BooksInfoContext _infoContext { get; set; }
-        public Books Book { get; set; }
+        public AuthorInfo Author { get; set; }
 
-        public DetailModel(BooksInfoContext infoContext)
+        public AuthorDetailsModel(BooksInfoContext infoContext)
         {
             _infoContext = infoContext;
         }
-
-        public void OnGet(int bookId)
+        public void OnGet(int authorId)
         {
-            Book = _infoContext.BooksList
-                .Include(a=>a.AuthorInfo)
-                .SingleOrDefault(b => b.Id == bookId);
+            Author = _infoContext.AuthorsList.SingleOrDefault(a=>a.Id==authorId);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Bandymas.Entities;
+﻿using Bandymas.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,8 +9,8 @@ namespace Bandymas.Controllers
 {
     public class DummyController:Controller
     {
-        private Entities.BooksInfoContext ctx;
-        public DummyController(Entities.BooksInfoContext _ctx)
+        private Models.BooksInfoContext ctx;
+        public DummyController(Models.BooksInfoContext _ctx)
         {
             ctx = _ctx;  
         }

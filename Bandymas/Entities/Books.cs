@@ -1,4 +1,4 @@
-﻿using Bandymas.Entities;
+﻿using Bandymas.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bandymas.Entities
+namespace Bandymas.Models
 {
     public class Books
     {
@@ -29,6 +29,7 @@ namespace Bandymas.Entities
         public int IBIN { get; set; }
         [Required]
         public string Title { get; set; }
+        [Required]
         public BookType Type { get; set; }
         public int AuthorInfoId { get; set; }
         public AuthorInfo AuthorInfo { get; set; }

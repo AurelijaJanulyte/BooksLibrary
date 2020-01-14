@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Bandymas.Entities
+namespace Bandymas.Models
 {
     public class BookInfo
     {

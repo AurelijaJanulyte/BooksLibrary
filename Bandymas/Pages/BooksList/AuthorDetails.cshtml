@@ -1,0 +1,24 @@
+﻿@page "{authorId:int}"
+@model Bandymas.Pages.BooksList.AuthorDetailsModel
+@{
+	ViewData["Title"] = "AuthorDetails";
+}
+
+<h2>Author Details</h2>
+
+<div>
+	Id: @Model.Author.Id
+</div>
+<div>
+	Title: @Model.Author.FirstName
+</div>
+<div>
+	Title: @Model.Author.LastName
+</div>
+
+@if (Model.Message != null)
+{
+	<div class="alert alert-info">@Model.Message</div>
+}
+
+<a asp-page="./AuthorsList" class="btn btn-default">All authors</a>
