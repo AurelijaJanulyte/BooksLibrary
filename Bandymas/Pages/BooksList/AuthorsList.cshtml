@@ -37,7 +37,12 @@
 				   asp-route-authorId="@author.Id">
 					<i class="glyphicon glyphicon-edit"></i>
 				</a>
-        </tr>
+				<a class="btn btn-lg"
+				   asp-page="./AuthorDeletion"
+				   asp-route-authorId="@author.Id">
+					<i class="glyphicon glyphicon-trash"></i>
+				</a>
+</tr>
 	}
 </table>
 

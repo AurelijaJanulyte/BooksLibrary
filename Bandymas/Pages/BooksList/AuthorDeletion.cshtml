@@ -1,0 +1,16 @@
+﻿@page "{authorId}"
+@model Bandymas.Pages.BooksList.AuthorDeletionModel
+@{
+	ViewData["Title"] = "AuthorDeletion";
+}
+
+<h2>Author Delete !</h2>
+
+<div class="alert alert-danger">
+	Are you sure you want to delete @Model.Author.FirstName?
+</div>
+<form method="post">
+	<button type="submit" class="btn btn-danger">Yes</button>
+	<a asp-page="AuthorsList" class="btn btn-default">Cancel</a>
+</form>
+
