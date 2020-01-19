@@ -22,11 +22,11 @@ namespace Bandymas.Pages.BooksList
             _infoContext = infoContext;
         }
 
-        public void OnGet(int bookId)
+        public async Task OnGet(int bookId)
         {
-            Book = _infoContext.BooksList
+            Book = await _infoContext.BooksList
                 .Include(a=>a.AuthorInfo)
-                .SingleOrDefault(b => b.Id == bookId);
+                .SingleOrDefaultAsync(b => b.Id == bookId);
         }
     }
 }

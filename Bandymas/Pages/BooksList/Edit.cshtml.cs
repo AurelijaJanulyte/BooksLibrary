@@ -29,14 +29,14 @@ namespace Bandymas.Pages.BooksList
             Types = _htmlHelper.GetEnumSelectList<BookType>();
         }
 
-        public IActionResult OnGet(int? bookId)
+        public async Task<IActionResult> OnGet(int? bookId)
         {
-            Authors = _infoContext.AuthorsList.ToList()
+            Authors = (await _infoContext.AuthorsList.ToListAsync())
                    .Select(a => new SelectListItem { Value = a.Id.ToString(), Text = $"{a.FirstName} {a.LastName}" });
 
             if (bookId.HasValue)
             {
-                var book = _infoContext.BooksList.SingleOrDefault(b => b.Id == bookId.Value);
+                var book = await _infoContext.BooksList.SingleOrDefaultAsync(b => b.Id == bookId.Value);
                 Book = new BookToUpdate { IBIN = book.IBIN, Title = book.Title, Type = book.Type, AuthorId=book.AuthorInfoId};
             }
             else
@@ -52,7 +52,7 @@ namespace Bandymas.Pages.BooksList
             return Page();
         }
 
-        public IActionResult OnPost(int? bookId)
+        public async Task <IActionResult> OnPost(int? bookId)
         {
             if (!ModelState.IsValid)
             {
@@ -63,12 +63,12 @@ namespace Bandymas.Pages.BooksList
 
             if (bookId.HasValue)
             {
-                var book = _infoContext.BooksList.Include(a=>a.AuthorInfo).Single(b => b.Id == bookId);
+                var book = await _infoContext.BooksList.Include(a=>a.AuthorInfo).SingleAsync(b => b.Id == bookId);
                 book.IBIN = Book.IBIN.Value;
                 book.Title = Book.Title;
                 book.Type = Book.Type.Value;
                 book.AuthorInfoId = Book.AuthorId;
-                _infoContext.SaveChanges();
+                await _infoContext.SaveChangesAsync();
 
                 return RedirectToPage("./Detail", new { bookId });
 
@@ -77,7 +77,7 @@ namespace Bandymas.Pages.BooksList
             {
                 var newBook = new Books(Book.IBIN.Value, Book.Title, Book.Type.Value,Book.AuthorId);
                 _infoContext.Add(newBook);
-                _infoContext.SaveChanges();
+                await _infoContext.SaveChangesAsync();
 
                 return RedirectToPage("./Detail", new { bookId = newBook.Id });
             }

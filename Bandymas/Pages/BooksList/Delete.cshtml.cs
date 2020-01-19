@@ -17,9 +17,9 @@ namespace Bandymas.Pages.BooksList
         {
             _booksInfoContext = booksInfoContext;
         }
-        public IActionResult OnGet(int bookId)
+        public async Task<IActionResult> OnGet(int bookId)
         {
-            Book = _booksInfoContext.BooksList.Single(b => b.Id==bookId);
+            Book = await _booksInfoContext.BooksList.SingleAsync(b => b.Id==bookId);
             if (Book == null) 
             {
                 return RedirectToPage("./NotFound");
@@ -27,14 +27,14 @@ namespace Bandymas.Pages.BooksList
             return Page();
         }
 
-        public IActionResult OnPost(int bookId) 
+        public async Task<IActionResult> OnPost(int bookId) 
         {
-            var book = _booksInfoContext.BooksList.Single(b => b.Id == bookId);
+            var book = await _booksInfoContext.BooksList.SingleAsync(b => b.Id == bookId);
 
             if (book != null)
             {
                 _booksInfoContext.Remove(book);
-                _booksInfoContext.SaveChanges();
+                await _booksInfoContext.SaveChangesAsync();
             }
             else 
             {

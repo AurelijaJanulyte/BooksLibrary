@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Bandymas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bandymas.Pages.BooksList
 {
@@ -18,11 +19,11 @@ namespace Bandymas.Pages.BooksList
         {
             _booksInfo = booksInfo;
         }
-        public IActionResult OnGet(int? authorId)
+        public async Task<IActionResult> OnGet(int? authorId)
         {
             if (authorId.HasValue)
             {
-                var author = _booksInfo.AuthorsList.SingleOrDefault(a => a.Id == authorId.Value);
+                var author = await _booksInfo.AuthorsList.SingleOrDefaultAsync(a => a.Id == authorId.Value);
                 Author = new Author { FirstName = author.FirstName, LastName = author.LastName };
             }
             else 
@@ -37,7 +38,7 @@ namespace Bandymas.Pages.BooksList
             return Page();
         }
 
-        public IActionResult OnPost(int? authorId) 
+        public async Task<IActionResult> OnPost(int? authorId) 
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +50,7 @@ namespace Bandymas.Pages.BooksList
             {
                 var newAuthor = new AuthorInfo(Author.FirstName,Author.LastName);
                 _booksInfo.Add(newAuthor);
-                _booksInfo.SaveChanges();
+                await _booksInfo.SaveChangesAsync();
             }
             return RedirectToPage("./AuthorsList");
         }

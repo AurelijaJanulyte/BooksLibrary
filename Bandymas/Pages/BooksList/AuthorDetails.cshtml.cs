@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Bandymas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bandymas.Pages.BooksList
 {
@@ -19,9 +20,9 @@ namespace Bandymas.Pages.BooksList
         {
             _infoContext = infoContext;
         }
-        public void OnGet(int authorId)
+        public async Task OnGet(int authorId)
         {
-            Author = _infoContext.AuthorsList.SingleOrDefault(a=>a.Id==authorId);
+            Author = await _infoContext.AuthorsList.SingleOrDefaultAsync(a=>a.Id==authorId);
         }
     }
 }

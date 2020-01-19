@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Bandymas.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bandymas.Pages.BooksList
 {
@@ -21,18 +22,18 @@ namespace Bandymas.Pages.BooksList
             _infoContext = infoContext;
         }
 
-        public void OnGet(string SearchedTerm )
+        public async Task OnGet(string SearchedTerm )
         {
             if (string.IsNullOrWhiteSpace(SearchedTerm))
             {
-                Authors = _infoContext.AuthorsList.ToList();
+                Authors = await _infoContext.AuthorsList.ToListAsync();
             }
             else 
             {
-                Authors = _infoContext.AuthorsList
+                Authors = await _infoContext.AuthorsList
                     .Where(a => a.FirstName.Contains(SearchedTerm, StringComparison.InvariantCultureIgnoreCase) ||
                            a.LastName.Contains(SearchedTerm, StringComparison.InvariantCultureIgnoreCase))
-                    .ToList();
+                    .ToListAsync();
             }
         }
     }
