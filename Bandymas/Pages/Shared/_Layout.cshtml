@@ -19,25 +19,24 @@
 </head>
 <body>
 	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-			<div class="container">
-				<a class="navbar-brand" asp-area="" asp-page="/Index">Bandymas</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-						aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="navi-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/BooksList/List">Books</a>
-							</li>
-                         <li class="navi-item">
-							<a class="nav-link text-dark" asp-area="" asp-page="/BooksList/AuthorsList">Authors</a>
-						</li>
-					</ul>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<a class="navbar-brand" asp-page="/Index">Bandymas</a>
 				</div>
-			</div>
+
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse">
+					<ul class="nav navbar-nav">
+						<li><a class="navbar-link" asp-page="/BooksList/List">Books</a></li>
+						<li><a class="navbar-link" asp-page="/BooksList/AuthorsList">Authors</a></li>
+					</ul>
+					
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
 		</nav>
+		
 	</header>
 	<div class="container">
 		<partial name="_CookieConsentPartial" />

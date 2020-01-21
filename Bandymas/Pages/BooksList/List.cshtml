@@ -20,13 +20,15 @@
 </form>
 
 
-<table class="table">
+<table class="table table-hover">
+	<thead>
 	<tr>
-		<th>Author</th>
-		<th>IBIN</th>
-		<th>Title</th>
-		<th>Type</th>
+		<th scope="col">Author</th>
+		<th scope="col">IBIN</th>
+		<th scope="col">Title</th>
+		<th scope="col">Type</th>
 	</tr>
+	</thead>
 	@foreach (var book in Model.BooksOnScreen)
 	{
 		<tr>
