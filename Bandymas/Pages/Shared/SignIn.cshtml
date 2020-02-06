@@ -1,0 +1,19 @@
+﻿@page
+@model Bandymas.Models.SignIn
+
+@if (!ViewContext.ModelState.IsValid)
+{
+    <div asp-validation-summary="All" class="from-validation"></div>
+}
+
+<form class="form-signin" asp-action="SignIn"
+      asp-route-returnUrl="@HttpContext.Request.Query["returnUrl"]">
+    <h2>Please sign in</h2>
+    <label class="sr-only">Username</label>
+    <input type="text" class="form-control" placeholder="Username"
+           asp-for="Username" />
+    <label class="password">Password</label>
+    <input type="text" class="form-control" placeholder="Password"
+           asp-for="Password" />
+    <button class="btn btn-primary btn-block">Sign In</button>
+</form>
