@@ -1,5 +1,6 @@
 ﻿@page
 @model Bandymas.Models.SignIn
+@Model = new SignIn()
 
 @if (!ViewContext.ModelState.IsValid)
 {
@@ -7,13 +8,13 @@
 }
 
 <form class="form-signin" asp-action="SignIn"
-      asp-route-returnUrl="@HttpContext.Request.Query["returnUrl"]">
+      >
     <h2>Please sign in</h2>
     <label class="sr-only">Username</label>
     <input type="text" class="form-control" placeholder="Username"
-           asp-for="Username" />
+           asp-for="@Model.Username" />
     <label class="password">Password</label>
     <input type="text" class="form-control" placeholder="Password"
-           asp-for="Password" />
+           asp-for="@Model.Password" />
     <button class="btn btn-primary btn-block">Sign In</button>
 </form>

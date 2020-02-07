@@ -24,7 +24,7 @@ namespace Bandymas.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
-            return View();
+            return View(new SignIn());
         }
 
         [Route("SignIn")]
