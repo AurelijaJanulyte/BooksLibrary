@@ -35,7 +35,8 @@ namespace Bandymas
             var connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=BooksInfoDB;Trusted_Connection=True;";
             services.AddDbContext<BooksInfoContext>(o => o.UseSqlServer(connectionString));
             services.AddIdentityServer()
-                .AddSigningCredential(new X509Certificate2(Path.Combine(".", "certs", "IdentityServer4Auth.pfx")))
+                .AddDeveloperSigningCredential()
+                //.AddSigningCredential(new X509Certificate2(Path.Combine(".", "certs", "IdentityServer4Auth.pfx")))
                 .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
                 .AddInMemoryClients(IdentityServerConfig.GetClients())
                 .AddTestUsers(IdentityServerConfig.GetUsers());
@@ -48,7 +49,7 @@ namespace Bandymas
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
                 .AddOpenIdConnect(options => {
-                    options.Authority = "https://localhost:5001;http://localhost:5000";
+                    options.Authority = "https://localhost:5001";
                     options.ClientId = "AuthWeb";
                     options.SaveTokens = true;
                     options.TokenValidationParameters.NameClaimType = "name";
@@ -67,6 +68,8 @@ namespace Bandymas
             {
                 app.UseExceptionHandler();
             }
+
+            app.UseHttpsRedirection();
 
             //app.UseStatusCodePages();
             app.UseStaticFiles();
