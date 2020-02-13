@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Bandymas.Models;
-using Bandymas.Services;
+using IdentityServer4.Quickstart.UI;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,17 +34,26 @@ namespace Bandymas
 
             var connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=BooksInfoDB;Trusted_Connection=True;";
             services.AddDbContext<BooksInfoContext>(o => o.UseSqlServer(connectionString));
+            services.AddIdentityServer()
+                .AddSigningCredential(new X509Certificate2(Path.Combine(".", "certs", "IdentityServer4Auth.pfx")))
+                .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
+                .AddInMemoryClients(IdentityServerConfig.GetClients())
+                .AddTestUsers(IdentityServerConfig.GetUsers());
 
-            var users = new Dictionary<string, string> { { "Aurelja", "password" } };
-            services.AddSingleton<IUserService>(new DummyUserService(users));
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddAuthentication(options => {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             })
-                .AddCookie(options => {
-                    options.LoginPath = "/Pages/Shared/SignIn";
-                    }) ; 
+                .AddOpenIdConnect(options => {
+                    options.Authority = "https://localhost:5001;http://localhost:5000";
+                    options.ClientId = "AuthWeb";
+                    options.SaveTokens = true;
+                    options.TokenValidationParameters.NameClaimType = "name";
+                })
+                .AddCookie();
         }
         [Obsolete]
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,8 +70,13 @@ namespace Bandymas
 
             //app.UseStatusCodePages();
             app.UseStaticFiles();
+
+            AccountOptions.ShowLogoutPrompt = false;
+            AccountOptions.AutomaticRedirectAfterSignOut = true;
+
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseIdentityServer();
+            app.UseMvcWithDefaultRoute();
        
         }
     }
